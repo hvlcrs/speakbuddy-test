@@ -1,0 +1,83 @@
+definitions:
+  response.Audio:
+    description: Audio API response information
+    properties:
+      audio_format:
+        type: string
+      file_name:
+        type: string
+      phrase_id:
+        type: string
+      user_id:
+        type: string
+    required:
+    - phrase_id
+    - user_id
+    type: object
+info:
+  contact: {}
+paths:
+  /audio/user/{user_id}/phrase/{phrase_id}:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload audio file
+      parameters:
+      - description: User ID
+        example: '"test"'
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Phrase ID
+        example: '"test"'
+        in: path
+        name: phrase_id
+        required: true
+        type: string
+      - description: Audio file
+        in: formData
+        name: audio
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Audio'
+      summary: Upload audio file
+      tags:
+      - audio
+  /audio/user/{user_id}/phrase/{phrase_id}/{audio_format}:
+    get:
+      description: Get transcoded audio file with specific format
+      parameters:
+      - description: User ID
+        example: '"test"'
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Phrase ID
+        example: '"test"'
+        in: path
+        name: phrase_id
+        required: true
+        type: string
+      - description: Audio format
+        example: '".mp3"'
+        in: path
+        name: audio_format
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+      summary: Get transcoded audio file with specific format
+      tags:
+      - audio
+swagger: "2.0"

@@ -1,0 +1,123 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/audio/user/{user_id}/phrase/{phrase_id}": {
+            "post": {
+                "description": "Upload audio file",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "audio"
+                ],
+                "summary": "Upload audio file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "\"test\"",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"test\"",
+                        "description": "Phrase ID",
+                        "name": "phrase_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Audio file",
+                        "name": "audio",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Audio"
+                        }
+                    }
+                }
+            }
+        },
+        "/audio/user/{user_id}/phrase/{phrase_id}/{audio_format}": {
+            "get": {
+                "description": "Get transcoded audio file with specific format",
+                "tags": [
+                    "audio"
+                ],
+                "summary": "Get transcoded audio file with specific format",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "\"test\"",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"test\"",
+                        "description": "Phrase ID",
+                        "name": "phrase_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\".mp3\"",
+                        "description": "Audio format",
+                        "name": "audio_format",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "response.Audio": {
+            "description": "Audio API response information",
+            "type": "object",
+            "required": [
+                "phrase_id",
+                "user_id"
+            ],
+            "properties": {
+                "audio_format": {
+                    "type": "string"
+                },
+                "file_name": {
+                    "type": "string"
+                },
+                "phrase_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

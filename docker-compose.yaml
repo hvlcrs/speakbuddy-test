@@ -1,0 +1,38 @@
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: release
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - DB_HOST=postgres
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: speakbuddy
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+ 
+  # Adminer used for local database debugging
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+ 
+volumes:
+  pgdata:
